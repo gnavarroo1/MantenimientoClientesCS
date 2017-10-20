@@ -14,39 +14,15 @@ namespace MantenimientoClientesBLL
 
 
 
-        public ClienteBusiness()
-        {
-            clienteDao = new ClienteDAO();
-        }
-
-
-
-        public void insertar(Cliente cliente)
-        {
-            clienteDao.Insertar(cliente);
-        }
-
-        public void actualizar(Cliente cliente)
-        {
-            clienteDao.Actualizar(cliente);
-        }
-
-        public void eliminar(int? id)
-        {
-            clienteDao.Eliminar(id);
-        }
-
-
-        public Cliente obtener(int? id)
-        {
-            return clienteDao.Obtener(id);
-        }
-
+        public ClienteBusiness() => clienteDao = new ClienteDAO();
+        public void Insertar(Cliente cliente) => clienteDao.Insertar(cliente);
+        public void Actualizar(Cliente cliente) => clienteDao.Actualizar(cliente);
+        public void Eliminar(int? id) => clienteDao.Eliminar(id);
+        public Cliente Obtener(int? id) => clienteDao.Obtener(id);
         public List<Cliente> Listar()
         {
             return clienteDao.Listar();
         }
-
         public List<Cliente> Listar(String condicion)
         {
             return clienteDao.Listar(condicion);
