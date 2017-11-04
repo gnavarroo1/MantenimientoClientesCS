@@ -11,9 +11,6 @@ namespace MantenimientoClientesBLL
     public class ClienteBusiness
     {
         private ClienteDAO clienteDao;
-
-
-
         public ClienteBusiness() => clienteDao = new ClienteDAO();
         public void Insertar(Cliente cliente) => clienteDao.Insertar(cliente);
         public void Actualizar(Cliente cliente) => clienteDao.Actualizar(cliente);

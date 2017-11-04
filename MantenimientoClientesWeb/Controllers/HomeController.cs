@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MantenimientoClientesWeb.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,23 +9,26 @@ namespace MantenimientoClientesWeb.Controllers
 {
     public class HomeController : Controller
     {
+        Boolean sessionOpen()
+        {
+            return Session["objUsuario"] != null;
+        }
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login");
+        }
+        [HttpGet]
+        public ActionResult CerrarSesion()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            LoginViewModel objViewModel = new LoginViewModel();
+            return View(objViewModel);
         }
     }
 }
