@@ -8,7 +8,7 @@ namespace MantenimientoClientes.DAL
 {
     public interface Base<T,p>
     {
-        void Insertar(T e);
+        void InsertarActualizar(T e);
         void Actualizar(T e);
         void Eliminar(p id);
         T Obtener(p id);

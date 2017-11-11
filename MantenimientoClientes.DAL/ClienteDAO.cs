@@ -50,18 +50,26 @@ namespace MantenimientoClientes.DAL
             }
         }
 
-        public void Insertar(Cliente e)
+        public void InsertarActualizar(Cliente e)
         {
             try
             {
-                ExecuteQuery("Insert into Cliente(idcliente,Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.idcliente + "','" 
-                                                                                                                             + e.Apellido + "','" 
+                ExecuteQuery("Insert into Cliente(idcliente,Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.idcliente + "','"
+                                                                                                                             + e.Apellido + "','"
                                                                                                                              + e.Nombre + "','"
                                                                                                                              + e.Dni + "','"
                                                                                                                              + e.Sexo + "','"
                                                                                                                              + e.Edad + "','"
                                                                                                                              + e.Nivelestudios + "','"
-                                                                                                                             + e.Telefono + "' )");
+                                                                                                                             + e.Telefono + "' ) ON DUPLICATE KEY " +
+                                                                                                                             "UPDATE Apellido ='" + e.Apellido + "'" +
+                                                                                                                             ",Nombre = '" + e.Nombre +
+                                                                                                                             "',Dni ='" + e.Dni +
+                                                                                                                             "',Sexo= '" + e.Sexo +
+                                                                                                                             "',Edad= '" + e.Edad +
+                                                                                                                             "',Nivelestudios = '" + e.Nivelestudios +
+                                                                                                                             "',Telefono'" + e.Telefono);
+                
             }
             catch (Exception ex)
             {

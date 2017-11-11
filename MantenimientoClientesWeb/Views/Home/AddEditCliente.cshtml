@@ -1,0 +1,36 @@
+﻿@using MantenimientoClientesWeb.ViewModel,
+@model AddEditClienteViewModel
+
+@{
+    ViewBag.Title = "Cliente";
+    ViewBag.SubTitle = Model.ClienteId.HasValue ? "Editar" : "Agregar";
+    ViewBag.Icon = "fa fa-user";
+    ViewBag.Categoria = "active";
+    ViewBag.message = Model.ClienteId.HasValue ? "¿Está seguro de actualizar este cliente?" : "¿Está seguro de registrar este cliente?";
+}   
+<form name=formulario role="form" method="post" action="@Url.Action("AddEditProducto")">
+    @Html.HiddenFor(x => x.ClienteId)
+    <div class="form-group">
+        <label>Apellido</label><label style="color:red">&nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Apellido)</label>
+        @Html.TextBoxFor(x => x.Apellido, new { @class = "form-control" })
+        <label>Nombre</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Nombre)</label>
+        @Html.TextBoxFor(x => x.Nombre, new { @class = "form-control" })
+        <label>DNI</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Dni)</label>
+        @Html.TextBoxFor(x => x.Dni, new { @class = "form-control" })
+        <label>Sexo</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Sexo)</label>
+        @Html.RadioButtonFor(x => x.Sexo, "MASCULINO")
+        @Html.RadioButtonFor(x => x.Sexo, "FEMENINO")
+        <label>Edad</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Edad)</label>
+        @Html.TextBoxFor(x => x.Edad, new { @class = "form-control" })
+        <label>Nivel de Estudios</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Nivelestudios)</label>
+        @Html.DropDownListFor(x => x.Nivelestudios, new SelectList(Enum.GetValues(typeof(NivelEstudios))),
+                    "Seleccionar",
+                    new { @class = "form-control" })
+        <label>Telefono</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Telefono)</label>
+        @Html.TextBoxFor(x => x.Telefono, new { @class = "form-control" })
+    </div>
+    <button type="button" onclick="confirmarForm('@ViewBag.message')" class="btn btn-primary">
+        <i class="fa fa-save"></i>Guardar
+    </button>
+    <a href="@Url.Action("LstCliente")"><i class="fa fa-arrow-left"></i>Cancelar </a>
+</form>
