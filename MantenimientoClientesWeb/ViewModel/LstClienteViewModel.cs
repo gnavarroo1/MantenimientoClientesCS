@@ -1,4 +1,5 @@
-﻿using MantenimientoClientesBOL.Models;
+﻿using MantenimientoClientesBLL;
+using MantenimientoClientesBOL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,15 @@ namespace MantenimientoClientesWeb.ViewModel
 
         public void Fill()
         {
+            ClienteBusiness clienteBusiness = new ClienteBusiness();
+            if(!String.IsNullOrEmpty(Filtro))
+            {
+                LstClientes = clienteBusiness.Listar(Filtro);
+            }
+            else
+            {
+                LstClientes = clienteBusiness.Listar();
+            }
 
         }
     }

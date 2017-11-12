@@ -9,6 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace MantenimientoClientesWeb.Controllers
 {
     public class HomeController : Controller
@@ -19,8 +20,7 @@ namespace MantenimientoClientesWeb.Controllers
             return Session["objUsuario"] != null;
         }
         public ActionResult Index()
-        {
-            
+        {           
             return RedirectToAction("Login");
         }
         [HttpGet]
@@ -54,7 +54,7 @@ namespace MantenimientoClientesWeb.Controllers
                     }
                     else
                     {
-                        ViewBag.Mensaje = "Usuario y/o contraseña incorrecta ";
+                        ViewBag.Error = "Usuario y/o contraseña incorrecta ";
                         return View(objViewModel);
                     }
 
@@ -114,5 +114,21 @@ namespace MantenimientoClientesWeb.Controllers
             else
                 return View(objViewModel);
         }
+
+        [HttpGet]
+        public ActionResult LstCliente()
+        {
+            if (!sessionOpen()) return RedirectToAction("Login");
+            LstClienteViewModel objViewModel = new LstClienteViewModel();
+            return View(objViewModel);
+        }
+        [HttpPost]
+        public ActionResult LstCliente(LstClienteViewModel objViewModel)
+        {
+            if (!sessionOpen()) return RedirectToAction("Login");
+            objViewModel.Fill();
+            return View(objViewModel);
+        }
+
     }
 }

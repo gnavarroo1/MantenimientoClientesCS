@@ -1,8 +1,8 @@
-﻿@using MantenimientoClientesWeb.ViewModel,
+﻿@using MantenimientoClientesWeb.ViewModel
 @model AddEditClienteViewModel
 
 @{
-    ViewBag.Title = "Cliente";
+    ViewBag.Title = Model.ClienteId.HasValue ? "Editar cliente" : "Agregar cliente";
     ViewBag.SubTitle = Model.ClienteId.HasValue ? "Editar" : "Agregar";
     ViewBag.Icon = "fa fa-user";
     ViewBag.Categoria = "active";

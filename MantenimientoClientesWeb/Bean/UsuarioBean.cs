@@ -7,8 +7,8 @@ namespace MantenimientoClientesWeb.Bean
 {
     public class UsuarioBean
     {
-        private String correo { get; set; }
-        private String clave { get; set; }
+        public String correo { get; set; }
+        public String clave { get; set; }
 
         public UsuarioBean()
         {

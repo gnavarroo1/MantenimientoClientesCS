@@ -15,11 +15,27 @@ namespace MantenimientoClientes.DAL
 
         MySqlConnection con;
         MySqlDataAdapter da;
+        private string server;
+        private string database;
+        private string uid;
+        private string password;
 
-        MySqlConnection GetConnectionMySQL()
+        public DataAccess()
         {
-            return new MySqlConnection("id=root;password=root;server=localhost;database=bdcliente");
+            Initialize();
         }
+        private void Initialize()
+        {
+            server = "localhost";
+            database = "bdcliente";
+            uid = "root";
+            password = "root";
+            string connectionString;
+            connectionString = "SERVER=" + server + ";" + "DATABASE=" +
+            database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
+            con = new MySqlConnection(connectionString);
+        }
+
 
         void CloseConnectionMySQL(MySqlConnection con)
         {
@@ -34,7 +50,7 @@ namespace MantenimientoClientes.DAL
         
         public DataTable GetTable(String command)
         {
-            con = GetConnectionMySQL();
+            
             try
             {
                 con.Open();
@@ -57,16 +73,17 @@ namespace MantenimientoClientes.DAL
 
         public void ExecuteQuery(String command)
         {
-            con = GetConnectionMySQL();
+           
             try
             {
-                con.Open();
-                MySqlCommand com = new MySqlCommand(command, con);
-                com.ExecuteNonQuery();
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand com = new MySqlCommand(command, con);
+                    com.ExecuteNonQuery();
+                }
             }
             catch (MySqlException)
             {
-
                 throw new ApplicationException("El servidor de datos no esta disponible");
             }
             catch (Exception ex)
@@ -75,6 +92,45 @@ namespace MantenimientoClientes.DAL
             }
             finally { CloseConnectionMySQL(con); }
         }
-        
+
+        private bool OpenConnection()
+        {
+            try
+            {
+                con.Open();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                //When handling errors, you can your application's response based 
+                //on the error number.
+                //The two most common error numbers when connecting are as follows:
+                //0: Cannot connect to server.
+                //1045: Invalid user name and/or password.
+                switch (ex.Number)
+                {
+                    case 0:
+                        throw new ApplicationException("Cannot connect to server.  Contact administrator");
+                    case 1045:
+                        throw new ApplicationException("Invalid username/password, please try again");
+                }
+                return false;
+            }
+        }
+        private bool CloseConnection()
+        {
+            try
+            {
+                con .Close();
+                return true;
+            }
+            catch (MySqlException ex)
+            {
+                return false;
+                throw new ApplicationException(ex.Message);
+                
+            }
+            
+        }
     }
 }

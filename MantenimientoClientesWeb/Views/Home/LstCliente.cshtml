@@ -1,17 +1,61 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@model MantenimientoClientesWeb.ViewModel.LstClienteViewModel
+@{
+    ViewBag.Title = "Lista clientes";
+    ViewBag.SubTitle = "Lista";
+    ViewBag.Icon = "fa fa-user";
+    ViewBag.Cliente = "active";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<form role="form" method="post" action="@Url.Action("LstCliente")">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Filtro</label>
+                @Html.TextBoxFor(x => x.Filtro, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i>Buscar</button>
+</form>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Edad</th>
+            <th>DNI</th>
+            <th>Nivel de estudios</th>
+            <th>Sexo</th>
+            <th>Telefono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LstClientes)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido</td>
+                <td>@item.Edad</td>
+                <td>@item.Dni</td>
+                <td>@item.Nivelestudios</td>
+                <td>@item.Sexo</td>
+                <td>@item.Telefono</td>
+                <td>
+                    <a class="btn btn-default" href="@Url.Action("AddEditCliente", new {ClienteId= item.idcliente })">
+                        <i class="fa fa-edit"></i> Editar
+                    </a>
+                    <a class="btn btn-default"
+                       onclick="confirmRedirect('@Url.Action("DeleteCliente", new { ClienteId = item.idcliente })','¿Seguro que eliminar este cliente?')">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-primary" href="@Url.Action("AddEditCliente")">
+    <i class="fa fa-plus"></i> Agregar
+</a>
