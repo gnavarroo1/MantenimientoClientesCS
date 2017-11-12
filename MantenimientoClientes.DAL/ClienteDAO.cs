@@ -86,7 +86,7 @@ namespace MantenimientoClientes.DAL
                 DataTable dt = GetTable("SELECT * FROM CLIENTE ORDER BY Nombre");
                 if (dt.Rows.Count > 0)
                 {
-                    lstClientes = dt.DataTableToList<Cliente>();
+                    lstClientes = utilExtension.DataTableToList<Cliente>(dt);
                 }
                 return lstClientes;
             }
@@ -104,7 +104,7 @@ namespace MantenimientoClientes.DAL
                 DataTable dt = GetTable("SELECT * FROM Cliente WHERE Apellido  = '" + condicion+"'");
                 if (dt.Rows.Count > 0)
                 {
-                    lstClientes = dt.DataTableToList<Cliente>();
+                    lstClientes = utilExtension.DataTableToList<Cliente>(dt);
                 }
                 return lstClientes;
             }
@@ -120,10 +120,10 @@ namespace MantenimientoClientes.DAL
             try
             {
                 Cliente c = new Cliente();
-                DataTable dt = GetTable("Select c from Cliente where idcliente = '" + id + "'");
+                DataTable dt = GetTable("Select * from Cliente where idcliente = '" + id + "'");
                 if(dt.Rows.Count>0)
                 {
-                    c = dt.DataTableToList<Cliente>()[0];
+                    c = utilExtension.DataTableToList<Cliente>(dt)[0];
                 }
 
                 return c;

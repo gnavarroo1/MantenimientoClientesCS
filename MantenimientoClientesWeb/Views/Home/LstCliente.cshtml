@@ -43,11 +43,11 @@
                 <td>@item.Sexo</td>
                 <td>@item.Telefono</td>
                 <td>
-                    <a class="btn btn-default" href="@Url.Action("AddEditCliente", new {ClienteId= item.idcliente })">
+                    <a class="btn btn-default" href="@Url.Action("AddEditCliente", new {ClienteId= @item.idcliente })">
                         <i class="fa fa-edit"></i> Editar
                     </a>
                     <a class="btn btn-default"
-                       onclick="confirmRedirect('@Url.Action("DeleteCliente", new { ClienteId = item.idcliente })','¿Seguro que eliminar este cliente?')">
+                       onclick="confirmRedirect('@Url.Action("DeleteCliente", new { ClienteId = @item.idcliente })','¿Seguro que eliminar este cliente?')">
                         <i class="fa fa-trash"></i> Eliminar
                     </a>
                 </td>

@@ -1,4 +1,4 @@
-﻿using MantenimientoClientes.DAL;
+﻿using MantenimientoClientesBLL;
 using MantenimientoClientesBOL.Models;
 using System;
 using System.Collections.Generic;
@@ -41,8 +41,8 @@ namespace MantenimientoClientesWeb.ViewModel
             this.ClienteId = ClienteId;
             if(ClienteId.HasValue)
             {
-                ClienteDAO dao = new ClienteDAO();
-                Cliente objCliente = dao.Obtener(ClienteId);
+                ClienteBusiness dao = new ClienteBusiness();
+                var objCliente = dao.Obtener(ClienteId);
                 if (objCliente == null) return;
                 this.Apellido = objCliente.Apellido;
                 this.Dni = objCliente.Dni;
