@@ -71,23 +71,19 @@ namespace MantenimientoClientes.DAL
             finally { CloseConnectionMySQL(con); }
         }
 
-        public void ExecuteQuery(String command)
+        public void ExecuteQuery(string command)
         {
-           
             try
             {
                 if (this.OpenConnection() == true)
                 {
                     MySqlCommand com = new MySqlCommand(command, con);
-                    com.ExecuteNonQuery();
+                    var obj = com.ExecuteReader();
                 }
-            }
-            catch (MySqlException)
-            {
-                throw new ApplicationException("El servidor de datos no esta disponible");
             }
             catch (Exception ex)
             {
+                Console.Write(ex);
                 throw new ApplicationException(ex.Message);
             }
             finally { CloseConnectionMySQL(con); }

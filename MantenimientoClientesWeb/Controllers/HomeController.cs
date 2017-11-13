@@ -6,6 +6,7 @@ using MantenimientoClientesWeb.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -95,19 +96,21 @@ namespace MantenimientoClientesWeb.Controllers
 
                     objCliente.idcliente = objViewModel.ClienteId;
                     objCliente.Apellido = objViewModel.Apellido;
-                    objCliente.Dni = objViewModel.Dni;
+                    objCliente.Dni = objViewModel.Dni.ToString();
                     objCliente.Nombre = objViewModel.Nombre;
                     objCliente.Nivelestudios = objViewModel.Nivelestudios;
                     objCliente.Sexo = objViewModel.Sexo;
-                    objCliente.Telefono = objViewModel.Telefono;
-                    objCliente.Edad = objViewModel.Edad;
+                    objCliente.Telefono = objViewModel.Telefono.ToString();
+                    objCliente.Edad = objViewModel.Edad.ToString();
 
                     clienteDAO.InsertarActualizar(objCliente);
-
+                    ViewBag.Success = "Cliente agregado con éxito";
+                    
                     return RedirectToAction("LstCliente");
                 }
                 catch (Exception)
                 {
+                    Console.Write("Error");
                     return View(objViewModel);
                 }
             }
