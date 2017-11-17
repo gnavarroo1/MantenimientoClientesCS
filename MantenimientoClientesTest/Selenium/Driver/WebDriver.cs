@@ -5,10 +5,10 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System;
 
-namespace MantenimientoClientesTest
+namespace MantenimientoClientesTest.Selenium.Driver
 {
 
-    public class Driver
+    public class WebDriver
     {
         public static IWebDriver InicializarWebDriver(string navegador)
         {
@@ -28,8 +28,6 @@ namespace MantenimientoClientesTest
                 default:
                     break;
             }
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             return driver;
         }
 

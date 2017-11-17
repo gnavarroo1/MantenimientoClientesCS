@@ -15,7 +15,7 @@ namespace MantenimientoClientes.DAL
 
         #region Base<Cliente, String> Members;
 
-        public void Actualizar(Cliente e)
+        private void Actualizar(Cliente e)
         {
             try
             {
@@ -54,9 +54,20 @@ namespace MantenimientoClientes.DAL
         {
             try
             {
-                ExecuteQuery("Insert into Cliente(idcliente,Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.idcliente + "','"
-                 + e.Apellido + "','" + e.Nombre + "','" + e.Dni + "','" + e.Sexo + "','" + e.Edad + "','" + e.Nivelestudios + "','" + e.Telefono + "')");
-                
+                if (e.idcliente == null)
+                {
+                    ExecuteQuery("Insert into Cliente(Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.Apellido + "','" + e.Nombre + "','" + e.Dni + "','" + e.Sexo + "','" + e.Edad + "','" + e.Nivelestudios + "','" + e.Telefono + "')");
+                }
+                else
+                {
+                    ExecuteQuery("UPDATE Cliente SET Apellido ='" + e.Apellido + "'" +
+                             ",Nombre = '" + e.Nombre +
+                             "',Dni ='" + e.Dni +
+                             "',Sexo= '" + e.Sexo +
+                             "',Edad= '" + e.Edad +
+                             "',Nivelestudios = '" + e.Nivelestudios +
+                             "',Telefono'" + e.Telefono + "' WHERE idcliente = '" + e.idcliente + "'");
+                }
             }
             catch (Exception ex)
             {

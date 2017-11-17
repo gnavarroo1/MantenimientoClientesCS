@@ -54,8 +54,16 @@
             </tr>
         }
     </tbody>
+    <tfoot>
+        @if (ViewBag.DeleteConfirmation != null)
+        {
+
+                <tr class="field-validation-error" id="AddEditSuccessMsg" style="color: black;font-weight: bold;background-color: yellowgreen;">@ViewBag.DeleteConfirmation</tr>
+     
+        }
+    </tfoot>
 </table>
 
-<a class="btn btn-primary" href="@Url.Action("AddEditCliente")">
+<a class="btn btn-primary" href="@Url.Action("AddEditCliente")" id="AgregarCliente">
     <i class="fa fa-plus"></i> Agregar
 </a>

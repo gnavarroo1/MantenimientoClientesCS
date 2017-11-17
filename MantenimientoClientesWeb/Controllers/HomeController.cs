@@ -105,8 +105,8 @@ namespace MantenimientoClientesWeb.Controllers
 
                     clienteDAO.InsertarActualizar(objCliente);
                     ViewBag.Success = "Cliente agregado con éxito";
-                    
-                    return RedirectToAction("LstCliente");
+                    ModelState.Clear();
+                    return View(objViewModel);
                 }
                 catch (Exception)
                 {
@@ -131,6 +131,21 @@ namespace MantenimientoClientesWeb.Controllers
             if (!sessionOpen()) return RedirectToAction("Login");
             objViewModel.Fill();
             return View(objViewModel);
+        }
+        public ActionResult DeleteProducto(int? ClienteId)
+        {
+            if (!sessionOpen()) return RedirectToAction("Login");
+            try
+            {
+                ClienteBusiness dao = new ClienteBusiness();
+                dao.Eliminar(ClienteId);
+                ViewBag.DeleteConfirmation = " Cliente Eliminado con Exito ";
+                return RedirectToAction("LstProducto");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("LstProducto");
+            }
         }
 
     }
