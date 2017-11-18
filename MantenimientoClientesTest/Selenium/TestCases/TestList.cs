@@ -18,7 +18,7 @@ namespace MantenimientoClientesTest.Selenium.TestCases
     /// </summary>
     public class TestList
     {
-
+        /*
         private string UrlInicial = ConfigurationManager.AppSettings["urlInicial"];
         private string UrlListado = ConfigurationManager.AppSettings["urlListado"];
         LoginPage loginPage;
@@ -99,6 +99,6 @@ namespace MantenimientoClientesTest.Selenium.TestCases
             }
         }
 
-
+    */
     }
 }
