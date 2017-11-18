@@ -19,7 +19,7 @@ namespace MantenimientoClientes.DAL
         private string database;
         private string uid;
         private string password;
-
+        private string port;
         public DataAccess()
         {
             Initialize();
@@ -30,7 +30,9 @@ namespace MantenimientoClientes.DAL
             database = "bdcliente";
             uid = "root";
             password = "root";
+            port = "3306";
             string connectionString;
+            //connectionString = "SERVER=" + server + ";"+ "PORT=" + port + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
             con = new MySqlConnection(connectionString);
@@ -71,14 +73,35 @@ namespace MantenimientoClientes.DAL
             finally { CloseConnectionMySQL(con); }
         }
 
-        public void ExecuteQuery(string command)
+        public long? ExecuteQuery(string command)
         {
+            long? id = null;
             try
             {
                 if (this.OpenConnection() == true)
                 {
                     MySqlCommand com = new MySqlCommand(command, con);
                     var obj = com.ExecuteReader();
+                    id = com.LastInsertedId;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                throw new ApplicationException(ex.Message);
+            }
+            finally { CloseConnectionMySQL(con); }
+            return id;
+        }
+
+        public void TruncateTable()
+        {
+            try
+            {
+                if (this.OpenConnection() == true)
+                {
+                    MySqlCommand com = new MySqlCommand("TRUNCATE TABLE cliente", con);
+                    com.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)
@@ -88,6 +111,9 @@ namespace MantenimientoClientes.DAL
             }
             finally { CloseConnectionMySQL(con); }
         }
+
+
+
 
         private bool OpenConnection()
         {

@@ -1,15 +1,12 @@
 ﻿
+using ExcelDataReader;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
 
-using excel = Microsoft.Office.Interop.Excel;
 
 
 namespace MantenimientoClientesTest.Selenium.TestDataAccess
@@ -20,64 +17,80 @@ namespace MantenimientoClientesTest.Selenium.TestDataAccess
 
         public List<ClienteBean> ReadFromExcel(string keyName)
         {
-
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, excelPath);
-            
+ 
+            string pathbase = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.FullName;
+            string path = Path.Combine(pathbase, excelPath);
             List<ClienteBean> clientes = new List<ClienteBean>();
-            excel.Application excelApp = new excel.Application();
-            excel.Workbook excelWorkbook;
-            excel.Worksheet excelWorksheet;
-            excel.Range excelRange;
-
-            excelWorkbook = excelApp.Workbooks.Open(path);
-            excelWorksheet = excelWorkbook.Sheets[1];
-            excelRange = excelWorksheet.UsedRange;
-
-            int rowCount = excelRange.Rows.Count;
-            int colCount = excelRange.Columns.Count;
-
-            string[] headers = new string[colCount];
-            for (int i = 1; i <= colCount; i++)
-            {
-                headers[i - 1] = (Convert.ToString((excelRange.Cells[1, i] as excel.Range).Value2));
-
-            }
-            for (int j = 2; j <= rowCount; j++)
+            //bool e = File.Exists(path);
+            using (var stream = File.Open(path, FileMode.Open,FileAccess.Read, FileShare.Read))
             {
 
-
-                string Key = Convert.ToString((excelRange.Cells[j, 1] as excel.Range).Value2);
-                if (Key.Equals(keyName))
+                // Auto-detect format, supports:
+                //  - Binary Excel files (2.0-2003 format; *.xls)
+                //  - OpenXml Excel files (2007 format; *.xlsx)
+                
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
-                    ClienteBean clienteBean = new ClienteBean();
-                    clienteBean.Apellido = Convert.ToString((excelRange.Cells[j, 2] as excel.Range).Value2);
-                    clienteBean.Nombre = Convert.ToString((excelRange.Cells[j, 3] as excel.Range).Value2);
-                    clienteBean.Dni = Convert.ToString((excelRange.Cells[j, 4] as excel.Range).Value2);
-                    clienteBean.Sexo = Convert.ToString((excelRange.Cells[j, 5] as excel.Range).Value2);
-                    clienteBean.Nivelestudios = Convert.ToString((excelRange.Cells[j, 6] as excel.Range).Value2);
-                    clienteBean.Telefono = Convert.ToString((excelRange.Cells[j, 7] as excel.Range).Value2);
-                    clienteBean.Edad = Convert.ToString((excelRange.Cells[j, 8] as excel.Range).Value2);
-                    clienteBean.Resultado = Convert.ToString((excelRange.Cells[j, 9] as excel.Range).Value2);
-                    clientes.Add(clienteBean);
+                    
+                    
+                    // 2. Use the AsDataSet extension method
+                    DataSet result = reader.AsDataSet(new ExcelDataSetConfiguration()
+                    {
+                        ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                        {
+                            UseHeaderRow = true
+                        }
+                    });
+
+
+                    foreach (DataTable table in result.Tables)
+                    {
+                        clientes = DataTableToList<ClienteBean>(table);
+                        break;
+                        
+                    }
+                    
                 }
-                continue;
-
             }
-
-
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            Marshal.ReleaseComObject(excelRange);
-            Marshal.ReleaseComObject(excelWorksheet);
-            excelApp.Workbooks.Close();
-            Marshal.ReleaseComObject(excelWorkbook);
-            excelApp.Quit();
-            Marshal.ReleaseComObject(excelApp);
+            
             return clientes;
         }
 
+        private static List<T> DataTableToList<T>(DataTable table)
+        {
+            try
+            {
+                List<T> list = new List<T>();
+                foreach (DataRow row in table.Rows)
+                {
+                    T item = GetItem<T>(row);
+                    list.Add(item);
 
+                }
+                return list;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        private static T GetItem<T>(DataRow dr)
+        {
+            Type temp = typeof(T);
+            T obj = Activator.CreateInstance<T>();
+
+            foreach (DataColumn column in dr.Table.Columns)
+            {
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                        pro.SetValue(obj, dr[column.ColumnName], null);
+                    else
+                        continue;
+                }
+            }
+            return obj;
+        }
     }
 
 

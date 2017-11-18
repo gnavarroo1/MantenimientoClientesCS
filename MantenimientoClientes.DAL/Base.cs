@@ -8,11 +8,11 @@ namespace MantenimientoClientes.DAL
 {
     public interface Base<T,p>
     {
-        void InsertarActualizar(T e);
+        long? InsertarActualizar(T c);
         //void Actualizar(T e);
         void Eliminar(p id);
         T Obtener(p id);
         List<T> Listar();
-        List<T> Listar(String apellido);
+        List<T> Listar(string apellido);
     }
 }

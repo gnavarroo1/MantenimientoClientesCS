@@ -27,7 +27,9 @@ namespace MantenimientoClientesTest.Selenium.TestCases
         AddEditClientePage addEdit;
         IWebDriver driver;
 
-        [Test, Order(1)]
+
+        [Test, Order(6)]
+        [TestCase(TestName = "1- Login")]
         public void IniciarSesionValid()
         {
             loginPage = new LoginPage("chrome", UrlInicial);
@@ -44,7 +46,9 @@ namespace MantenimientoClientesTest.Selenium.TestCases
 
         }
 
-        [Test, Order(2)]
+
+        [Test, Order(7)]
+        [TestCase(TestName ="2- AgregarCliente")]
         [TestCaseSource("ExcelDataTest")]
         public void AgregarCliente(ClienteBean c)
         {
@@ -72,7 +76,7 @@ namespace MantenimientoClientesTest.Selenium.TestCases
             }
         }
 
-        public static IEnumerable<TestCaseData> ExcelDataTest
+        private static IEnumerable<TestCaseData> ExcelDataTest
         {
             get
             {

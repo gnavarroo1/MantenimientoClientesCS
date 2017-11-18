@@ -92,18 +92,7 @@ namespace MantenimientoClientesWeb.Controllers
                 try
                 {
                     ClienteBusiness clienteDAO = new ClienteBusiness();
-                    Cliente objCliente = new Cliente();
-
-                    objCliente.idcliente = objViewModel.ClienteId;
-                    objCliente.Apellido = objViewModel.Apellido;
-                    objCliente.Dni = objViewModel.Dni.ToString();
-                    objCliente.Nombre = objViewModel.Nombre;
-                    objCliente.Nivelestudios = objViewModel.Nivelestudios;
-                    objCliente.Sexo = objViewModel.Sexo;
-                    objCliente.Telefono = objViewModel.Telefono.ToString();
-                    objCliente.Edad = objViewModel.Edad.ToString();
-
-                    clienteDAO.InsertarActualizar(objCliente);
+                    clienteDAO.InsertarActualizar(objViewModel.ClienteId,objViewModel.Apellido,objViewModel.Nombre,objViewModel.Dni,objViewModel.Sexo,objViewModel.Edad, objViewModel.Nivelestudios,objViewModel.Telefono);
                     ViewBag.Success = "Cliente Agregado con Exito";
                     ModelState.Clear();
                     return View(objViewModel);
@@ -132,7 +121,7 @@ namespace MantenimientoClientesWeb.Controllers
             objViewModel.Fill();
             return View(objViewModel);
         }
-        public ActionResult DeleteProducto(int? ClienteId)
+        public ActionResult DeleteCliente(int? ClienteId)
         {
             if (!sessionOpen()) return RedirectToAction("Login");
             try
@@ -140,11 +129,11 @@ namespace MantenimientoClientesWeb.Controllers
                 ClienteBusiness dao = new ClienteBusiness();
                 dao.Eliminar(ClienteId);
                 ViewBag.DeleteConfirmation = " Cliente Eliminado con Exito ";
-                return RedirectToAction("LstProducto");
+                return RedirectToAction("LstCliente");
             }
             catch (Exception)
             {
-                return RedirectToAction("LstProducto");
+                return RedirectToAction("LstCliente");
             }
         }
 

@@ -41,7 +41,10 @@ namespace MantenimientoClientes.DAL
         {
             try
             {
-                ExecuteQuery("DELETE FROM Cliente where idcliente = '" + id + "'");
+                if (id != null)
+                {
+                    ExecuteQuery("DELETE FROM Cliente where idcliente = '" + id + "'");
+                }
             }
             catch (Exception ex)
             {
@@ -50,13 +53,14 @@ namespace MantenimientoClientes.DAL
             }
         }
 
-        public void InsertarActualizar(Cliente e)
+        public long? InsertarActualizar(Cliente e)
         {
+            long? id = e.idcliente;
             try
             {
                 if (e.idcliente == null)
                 {
-                    ExecuteQuery("Insert into Cliente(Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.Apellido + "','" + e.Nombre + "','" + e.Dni + "','" + e.Sexo + "','" + e.Edad + "','" + e.Nivelestudios + "','" + e.Telefono + "')");
+                    id = ExecuteQuery("Insert into Cliente(Apellido,Nombre,Dni,Sexo,Edad,Nivelestudios,Telefono) values ('" + e.Apellido + "','" + e.Nombre + "','" + e.Dni + "','" + e.Sexo + "','" + e.Edad + "','" + e.Nivelestudios + "','" + e.Telefono + "')");
                 }
                 else
                 {
@@ -66,14 +70,17 @@ namespace MantenimientoClientes.DAL
                              "',Sexo= '" + e.Sexo +
                              "',Edad= '" + e.Edad +
                              "',Nivelestudios = '" + e.Nivelestudios +
-                             "',Telefono'" + e.Telefono + "' WHERE idcliente = '" + e.idcliente + "'");
+                             "',Telefono ='" + e.Telefono + "' WHERE idcliente = '" + e.idcliente + "'");
+
                 }
+                
             }
             catch (Exception ex)
             {
 
                 throw new ApplicationException(ex.Message);
             }
+            return id;
         }
 
         public List<Cliente> Listar()
@@ -117,13 +124,15 @@ namespace MantenimientoClientes.DAL
         {
             try
             {
-                Cliente c = new Cliente();
-                DataTable dt = GetTable("Select * from Cliente where idcliente = '" + id + "'");
-                if(dt.Rows.Count>0)
+                Cliente c = null;
+                if (id != null)
                 {
-                    c = utilExtension.DataTableToList<Cliente>(dt)[0];
+                    DataTable dt = GetTable("Select * from Cliente where idcliente = '" + id + "'");
+                    if (dt.Rows.Count > 0)
+                    {
+                        c = utilExtension.DataTableToList<Cliente>(dt)[0];
+                    }
                 }
-
                 return c;
             }
             catch (Exception ex)

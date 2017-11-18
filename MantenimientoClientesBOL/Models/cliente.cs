@@ -12,6 +12,22 @@ namespace MantenimientoClientesBOL.Models
         [Key]
         public int? idcliente { get; set; }
 
+        public Cliente()
+        {
+        }
+
+        public Cliente(int? idcliente, string apellido, string nombre, string dni, string sexo, string edad, string nivelestudios, string telefono)
+        {
+            this.idcliente = idcliente;
+            Apellido = apellido;
+            Nombre = nombre;
+            Dni = dni;
+            Sexo = sexo;
+            Edad = edad;
+            Nivelestudios = nivelestudios;
+            Telefono = telefono;
+        }
+
         [Required]
         [StringLength(25)]
         public string Apellido { get; set; }
