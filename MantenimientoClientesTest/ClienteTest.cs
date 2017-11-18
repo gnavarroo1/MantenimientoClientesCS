@@ -32,7 +32,6 @@ namespace MantenimientoClientesTest
             this.init();
             try
             {
-
                 Console.WriteLine("Metodo Insertar");
                 long? id = clienteBusiness.InsertarActualizar(null, apellidoInsertar, nombreInsertar, dniInsertar, sexoInsertar, edadInsertar, nivelestudiosInsertar, telefonoInsertar);
                 cliente.idcliente = (int?)id;
