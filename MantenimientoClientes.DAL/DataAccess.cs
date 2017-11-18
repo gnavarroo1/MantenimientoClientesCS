@@ -29,7 +29,7 @@ namespace MantenimientoClientes.DAL
             server = "localhost";
             database = "bdcliente";
             uid = "root";
-            password = "root";
+            password = "";
             port = "3306";
             string connectionString;
             connectionString = "SERVER=" + server + ";"+ "PORT=" + port + ";" + "DATABASE=" + database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
