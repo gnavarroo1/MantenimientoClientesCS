@@ -8,6 +8,8 @@ using MantenimientoClientesTest.Selenium.PageObjects;
 using MantenimientoClientesTest.Selenium.Driver;
 using MantenimientoClientesTest.Selenium.TestDataAccess;
 using System.ComponentModel;
+using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace MantenimientoClientesTest.Selenium.TestCases
 {
@@ -20,55 +22,62 @@ namespace MantenimientoClientesTest.Selenium.TestCases
         private string UrlInicial = ConfigurationManager.AppSettings["urlInicial"];
         private string UrlListado = ConfigurationManager.AppSettings["urlListado"];
         LoginPage loginPage;
+        static List<ClienteBean> temp;
+        int len = 0;
         AddEditClientePage addEdit;
-        
+        IWebDriver driver;
 
-        [Test]
+        [Test, Order(1)]
         public void IniciarSesionValid()
         {
             loginPage = new LoginPage("chrome", UrlInicial);
+
             try
             {
+                driver = loginPage.GetWebDriver();
                 Assert.IsTrue(loginPage.IniciarSesion("admin", "clave"));
             }
             catch (Exception e)
             {
                 throw new ApplicationException(e.Message);
             }
-           
+
         }
 
-        [Test]
+        [Test, Order(2)]
         [TestCaseSource("ExcelDataTest")]
         public void AgregarCliente(ClienteBean c)
         {
             String msg = "";
+            //Assert.IsTrue(driver.Url.Equals(UrlListado));
+            driver.FindElement(By.XPath("//*[@id='AgregarCliente']")).Click();
             try
             {
-                
-                addEdit = new AddEditClientePage(loginPage.GetWebDriver());
-                Assert.IsTrue(addEdit.Driver.Equals(UrlListado));
+                addEdit = new AddEditClientePage(driver);
                 msg = addEdit.Insertar(c);
-                Assert.IsTrue(msg.Equals(c.Resultado));
+                msg = Regex.Replace(msg, @"\u0020", " ");
+                string esp = Regex.Replace(c.Resultado, @"\u00A0", " ");
+                bool b = msg.Equals(esp);
+                Assert.IsTrue(msg.Equals(esp));
             }
             catch (Exception e)
             {
-                throw new ApplicationException(e.Message);
+                throw e;
             }
             finally
             {
-                WebDriver.CerrarPagina(addEdit.Driver);
+                len++;
+                if (len == temp.Count)
+                    TearDown();
             }
         }
-
-    
 
         public static IEnumerable<TestCaseData> ExcelDataTest
         {
             get
             {
-                
-                List<ClienteBean> lstClientes = ExcelDataAccess.GetTestData("Insertar"); ;
+                List<ClienteBean> lstClientes = (new ExcelDataAccess()).ReadFromExcel("Insertar"); ;
+                temp = lstClientes;
                 if (lstClientes != null)
                     foreach (ClienteBean cliente in lstClientes)
                         yield return new TestCaseData(cliente);
@@ -77,9 +86,15 @@ namespace MantenimientoClientesTest.Selenium.TestCases
         }
 
 
+        public void TearDown()
+        {
+            if (driver != null)
+            {
+                driver.Close();
+                driver.Quit();
+            }
+        }
 
 
     }
-
-        
 }

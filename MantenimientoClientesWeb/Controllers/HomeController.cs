@@ -104,7 +104,7 @@ namespace MantenimientoClientesWeb.Controllers
                     objCliente.Edad = objViewModel.Edad.ToString();
 
                     clienteDAO.InsertarActualizar(objCliente);
-                    ViewBag.Success = "Cliente agregado con éxito";
+                    ViewBag.Success = "Cliente Agregado con Exito";
                     ModelState.Clear();
                     return View(objViewModel);
                 }

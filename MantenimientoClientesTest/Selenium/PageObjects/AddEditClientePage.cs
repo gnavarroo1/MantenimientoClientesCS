@@ -20,12 +20,13 @@ namespace MantenimientoClientesTest.Selenium.PageObjects
         public AddEditClientePage(IWebDriver driver)
         {
             this.driver = driver;
+            PageFactory.InitElements(driver, this);
         }
 
-
+        /*
         [FindsBy(How = How.XPath,Using = "//*[@id='AgregarCliente']")]
         public IWebElement AgregarCliente { get; set; }
-
+        */
         [FindsBy(How = How.Id, Using = "Apellido")]
         [CacheLookup]
         public IWebElement Apellido { get; set; }
@@ -38,9 +39,13 @@ namespace MantenimientoClientesTest.Selenium.PageObjects
         [CacheLookup]
         public IWebElement Dni { get; set; }
 
-        [FindsBy(How = How.Id, Using = "Sexo")]
+        [FindsBy(How = How.Id, Using = "SexoMasc")]
         [CacheLookup]
-        public IWebElement Sexo { get; set; }
+        public IWebElement SexoMasc { get; set; }
+
+        [FindsBy(How = How.Id, Using = "SexoFem")]
+        [CacheLookup]
+        public IWebElement SexoFem { get; set; }
 
         [FindsBy(How = How.Id, Using = "Nivelestudios")]
         [CacheLookup]
@@ -74,7 +79,7 @@ namespace MantenimientoClientesTest.Selenium.PageObjects
         [CacheLookup]
         public IWebElement SexoErrorDisplay { get; set; }
 
-        [FindsBy(How = How.Id, Using = "telefonoError")]
+        [FindsBy(How = How.Id, Using = "telfError")]
         [CacheLookup]
         public IWebElement TelefonoErrorDisplay { get; set; }
 
@@ -97,24 +102,36 @@ namespace MantenimientoClientesTest.Selenium.PageObjects
             SelectElement oSelect = new SelectElement(NivelEstudios);
             try
             {
-                AgregarCliente.Click();
+                //      AgregarCliente.Click();
                 Apellido.Clear();
-                Apellido.SendKeys(c.Apellido);
-                Edad.Clear();
-                Edad.SendKeys(c.Edad);
+                if(!String.IsNullOrEmpty(c.Apellido))
+                    Apellido.SendKeys(c.Apellido);
                 Nombre.Clear();
-                Nombre.SendKeys(c.Nombre);
+                if (!String.IsNullOrEmpty(c.Nombre))
+                    Nombre.SendKeys(c.Nombre);
                 Dni.Clear();
-                Dni.SendKeys(c.Dni);
-                Sexo.Clear();
-                Sexo.SendKeys(c.Sexo);
-                oSelect.SelectByText(c.Nivelestudios);
+                if (!String.IsNullOrEmpty(c.Dni))
+                    Dni.SendKeys(c.Dni);
+                if (c.Sexo.Equals("MASCULINO"))
+                {
+                    SexoMasc.Click();
+                }
+                if (c.Sexo.Equals("FEMENINO"))
+                {
+                    SexoFem.Click();
+                }
+                Edad.Clear();
+                if (!String.IsNullOrEmpty(c.Edad))
+                    Edad.SendKeys(c.Edad);
+                if (!String.IsNullOrEmpty(c.Nivelestudios))
+                    oSelect.SelectByText(c.Nivelestudios);
                 Telefono.Clear();
-                Telefono.SendKeys(c.Telefono);
+                if (!String.IsNullOrEmpty(c.Telefono))
+                    Telefono.SendKeys(c.Telefono);
                 Guardar.Click();
 
                 if (!String.IsNullOrEmpty(ApellidoErrorDisplay.Text))
-                    message= ApellidoErrorDisplay.Text;
+                    message = ApellidoErrorDisplay.Text;
                 if (!String.IsNullOrEmpty(NombreErrorDisplay.Text))
                     message = NombreErrorDisplay.Text;
                 if (!String.IsNullOrEmpty(DniErrorDisplay.Text))

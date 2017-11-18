@@ -25,8 +25,8 @@
         </div>
         <div class="form-group">
             <label>Sexo</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Sexo, "", new { id = "sexoError" })</label>
-            <div>@Html.Label("Masculino:  ")&nbsp;&nbsp;@Html.RadioButtonFor(x => x.Sexo, "MASCULINO")</div>
-            <div>@Html.Label("Femenino:  ")&nbsp;&nbsp;@Html.RadioButtonFor(x => x.Sexo, "FEMENINO")</div>
+            <div>@Html.Label("Masculino:  ")&nbsp;&nbsp;@Html.RadioButtonFor(x => x.Sexo, "MASCULINO" , new { id = "SexoMasc" })</div>
+            <div>@Html.Label("Femenino:  ")&nbsp;&nbsp;@Html.RadioButtonFor(x => x.Sexo, "FEMENINO", new { id = "SexoFem" })</div>
         </div>
         <div class="form-group">
             <label>Edad</label><label style="color:red"> &nbsp;&nbsp; @Html.ValidationMessageFor(x => x.Edad, "", new { id = "edadError" })</label>
@@ -48,12 +48,11 @@
             </button>
             <a href="@Url.Action("LstCliente")"><i class="fa fa-arrow-left"></i>Cancelar </a>
         </div>
-            @if (ViewBag.Success != null)
-            {
+           
                 <div>
                     <label class="field-validation-error" id="AddEditSuccessMsg" style="color: black;font-weight: bold;background-color: yellowgreen;">@ViewBag.Success</label>
                 </div>
-            }
+            
     </div>
     
 
