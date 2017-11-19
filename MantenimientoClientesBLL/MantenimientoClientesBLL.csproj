@@ -44,10 +44,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MantenimientoClientes.DAL\MantenimientoClientes.DAL.csproj">
-      <Project>{9a45d025-27b7-4f4a-8aad-9f60545d4ed7}</Project>
-      <Name>MantenimientoClientes.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MantenimientoClientesBOL\MantenimientoClientesBOL.csproj">
       <Project>{c0e0e37f-f52f-4a7b-9216-c97001c84445}</Project>
       <Name>MantenimientoClientesBOL</Name>

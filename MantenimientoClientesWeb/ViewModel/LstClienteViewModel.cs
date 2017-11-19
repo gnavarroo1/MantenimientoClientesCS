@@ -26,7 +26,7 @@ namespace MantenimientoClientesWeb.ViewModel
             }
             else
             {
-                LstClientes = clienteBusiness.Listar();
+                LstClientes = clienteBusiness.Listar(Filtro);
             }
 
         }

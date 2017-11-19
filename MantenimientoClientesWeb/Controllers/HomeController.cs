@@ -92,7 +92,7 @@ namespace MantenimientoClientesWeb.Controllers
                 try
                 {
                     ClienteBusiness clienteDAO = new ClienteBusiness();
-                    clienteDAO.InsertarActualizar(objViewModel.ClienteId,objViewModel.Apellido,objViewModel.Nombre,objViewModel.Dni,objViewModel.Sexo,objViewModel.Edad, objViewModel.Nivelestudios,objViewModel.Telefono);
+                    clienteDAO.AddEditCliente(objViewModel.ClienteId,objViewModel.Apellido,objViewModel.Nombre,objViewModel.Dni,objViewModel.Sexo,objViewModel.Edad, objViewModel.Nivelestudios,objViewModel.Telefono);
                     ViewBag.Success = "Cliente Agregado con Exito";
                     ModelState.Clear();
                     return View(objViewModel);

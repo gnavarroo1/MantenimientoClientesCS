@@ -294,10 +294,6 @@
     <Content Include="Scripts\jquery-3.2.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MantenimientoClientes.DAL\MantenimientoClientes.DAL.csproj">
-      <Project>{9A45D025-27B7-4F4A-8AAD-9F60545D4ED7}</Project>
-      <Name>MantenimientoClientes.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MantenimientoClientesBLL\MantenimientoClientesBLL.csproj">
       <Project>{1798ce6e-410c-4374-acd6-5d370f1a3c34}</Project>
       <Name>MantenimientoClientesBLL</Name>

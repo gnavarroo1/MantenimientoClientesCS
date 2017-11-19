@@ -3,7 +3,7 @@ using NUnit.Framework;
 using MantenimientoClientesBLL;
 using MantenimientoClientesBOL.Models;
 using System.Collections.Generic;
-using MantenimientoClientes.DAL;
+using MantenimientoClientesBOL;
 
 namespace MantenimientoClientesTest
 {
@@ -12,10 +12,11 @@ namespace MantenimientoClientesTest
     {
         private static ClienteBusiness clienteBusiness = new ClienteBusiness();
         private Cliente cliente = new Cliente();
+        
         private void init()
         {
-            DataAccess da = new DataAccess();
-            da.TruncateTable();
+            ClienteDAO dao = new ClienteDAO();
+            dao.Truncate();
         }
 
         private bool Compare(Cliente a, Cliente b)
@@ -33,8 +34,8 @@ namespace MantenimientoClientesTest
             try
             {
                 Console.WriteLine("Metodo Insertar");
-                long? id = clienteBusiness.InsertarActualizar(null, apellidoInsertar, nombreInsertar, dniInsertar, sexoInsertar, edadInsertar, nivelestudiosInsertar, telefonoInsertar);
-                cliente.idcliente = (int?)id;
+                int? id = clienteBusiness.AddEditCliente(null, apellidoInsertar, nombreInsertar, dniInsertar, sexoInsertar, edadInsertar, nivelestudiosInsertar, telefonoInsertar);
+                cliente.idcliente = id;
                 Assert.True(id > 0);
             }
             catch (Exception e)
@@ -59,8 +60,8 @@ namespace MantenimientoClientesTest
                 string Edad = ("11");
                 string Nivelestudios = ("UNIVERSIDAD");
                 string Telefono = ("222111333");
-                long? id = clienteBusiness.InsertarActualizar(cliente.idcliente, Apellido, Nombre, Dni, Sexo, Edad, Nivelestudios, Telefono);
-                cliente = new Cliente((int?)id, Apellido, Nombre, Dni, Sexo, Edad, Nivelestudios, Telefono);
+                int? id = clienteBusiness.AddEditCliente(cliente.idcliente, Apellido, Nombre, Dni, Sexo, Edad, Nivelestudios, Telefono);
+                cliente = new Cliente(id, Apellido, Nombre, Dni, Sexo, Edad, Nivelestudios, Telefono);
                 Assert.True(cliente.idcliente > 0);
             }
             catch (Exception e)
@@ -113,7 +114,7 @@ namespace MantenimientoClientesTest
             {
                 List<Cliente> clientes = null;
                 Console.WriteLine("Metodo Listar");
-                clientes = clienteBusiness.Listar();
+                clientes = clienteBusiness.Listar("");
 
                 Assert.True(clientes != null);
             }

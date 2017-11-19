@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" />
   <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -98,16 +99,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MantenimientoClientes.DAL\MantenimientoClientes.DAL.csproj">
-      <Project>{9A45D025-27B7-4F4A-8AAD-9F60545D4ED7}</Project>
-      <Name>MantenimientoClientes.DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MantenimientoClientesBLL\MantenimientoClientesBLL.csproj">
-      <Project>{1798CE6E-410C-4374-ACD6-5D370F1A3C34}</Project>
+      <Project>{1798ce6e-410c-4374-acd6-5d370f1a3c34}</Project>
       <Name>MantenimientoClientesBLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\MantenimientoClientesBOL\MantenimientoClientesBOL.csproj">
-      <Project>{C0E0E37F-F52F-4A7B-9216-C97001C84445}</Project>
+      <Project>{c0e0e37f-f52f-4a7b-9216-c97001c84445}</Project>
       <Name>MantenimientoClientesBOL</Name>
     </ProjectReference>
   </ItemGroup>
@@ -122,6 +119,7 @@
     <Error Condition="!Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.33.0\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.ChromeDriver.2.33.0\build\Selenium.WebDriver.ChromeDriver.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.WebDriver.IEDriver.3.7.0\build\Selenium.WebDriver.IEDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.WebDriver.IEDriver.3.7.0\build\Selenium.WebDriver.IEDriver.targets'))" />
     <Error Condition="!Exists('..\packages\Selenium.Firefox.WebDriver.0.19.1\build\Selenium.Firefox.WebDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Selenium.Firefox.WebDriver.0.19.1\build\Selenium.Firefox.WebDriver.targets'))" />
+    <Error Condition="!Exists('..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit3TestAdapter.3.9.0\build\net35\NUnit3TestAdapter.props'))" />
   </Target>
   <Import Project="..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.targets')" />
   <Import Project="..\packages\Selenium.WebDriver.ChromeDriver.2.33.0\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('..\packages\Selenium.WebDriver.ChromeDriver.2.33.0\build\Selenium.WebDriver.ChromeDriver.targets')" />
