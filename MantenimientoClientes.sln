@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantenimientoClientes.UI", "MantenimientoClientesWeb\MantenimientoClientes.UI.csproj", "{9421E2E4-E1BA-4D72-880A-A51D0C7F5618}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantenimientoClientes.SeleniumTests", "MantenimientoClientesTest\MantenimientoClientes.SeleniumTests.csproj", "{59E6897E-84BD-4519-91FA-CF4F50351F16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantenimientoClientes.SeleniumTests", "MantenimientoClientesSeleniumTests\MantenimientoClientes.SeleniumTests.csproj", "{59E6897E-84BD-4519-91FA-CF4F50351F16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantenimientoClientesBLL", "MantenimientoClientesBLL\MantenimientoClientesBLL.csproj", "{1798CE6E-410C-4374-ACD6-5D370F1A3C34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantenimientoClientesBOL", "MantenimientoClientesBOL\MantenimientoClientesBOL.csproj", "{C0E0E37F-F52F-4A7B-9216-C97001C84445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mantenimientoclientes.UnitTests", "Mantenimientoclientes.UnitTests\Mantenimientoclientes.UnitTests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mantenimientoclientes.UnitTests", "MantenimientoclientesUnitTests\Mantenimientoclientes.UnitTests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
