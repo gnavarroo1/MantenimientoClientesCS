@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MantenimientoClientesTest.Selenium.TestDataAccess
+namespace MantenimientoClientesSeleniumTests.Selenium.TestDataAccess
 {
     public class ClienteBean : IContainer
     { 

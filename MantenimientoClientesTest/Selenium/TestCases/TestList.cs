@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Text;
 using System.Collections.Generic;
-using MantenimientoClientesTest.Selenium;
+using MantenimientoClientesSeleniumTests.Selenium;
 using System.Configuration;
 using NUnit.Framework;
-using MantenimientoClientesTest.Selenium.PageObjects;
-using MantenimientoClientesTest.Selenium.Driver;
-using MantenimientoClientesTest.Selenium.TestDataAccess;
+using MantenimientoClientesSeleniumTests.Selenium.PageObjects;
+using MantenimientoClientesSeleniumTests.Selenium.Driver;
+using MantenimientoClientesSeleniumTests.Selenium.TestDataAccess;
 using System.ComponentModel;
 using OpenQA.Selenium;
 using System.Text.RegularExpressions;
 
-namespace MantenimientoClientesTest.Selenium.TestCases
+namespace MantenimientoClientesSeleniumTests.Selenium.TestCases
 {
     /// <summary>
     /// Summary description for TestList
     /// </summary>
     public class TestList
     {
-        /*
+        
         private string UrlInicial = ConfigurationManager.AppSettings["urlInicial"];
+        private string UrlAddEdit = ConfigurationManager.AppSettings["urlAddEdit"];
         private string UrlListado = ConfigurationManager.AppSettings["urlListado"];
         LoginPage loginPage;
         static List<ClienteBean> temp;
@@ -28,8 +29,7 @@ namespace MantenimientoClientesTest.Selenium.TestCases
         IWebDriver driver;
 
 
-        [Test, Order(6)]
-        [TestCase(TestName = "1- Login")]
+        [Test, Order(1)]
         public void IniciarSesionValid()
         {
             loginPage = new LoginPage("chrome", UrlInicial);
@@ -41,20 +41,20 @@ namespace MantenimientoClientesTest.Selenium.TestCases
             }
             catch (Exception e)
             {
+                TearDown();
                 throw new ApplicationException(e.Message);
             }
 
         }
 
 
-        [Test, Order(7)]
-        [TestCase(TestName ="2- AgregarCliente")]
+        [Test, Order(2)]
         [TestCaseSource("ExcelDataTest")]
         public void AgregarCliente(ClienteBean c)
         {
             String msg = "";
-            //Assert.IsTrue(driver.Url.Equals(UrlListado));
-            driver.FindElement(By.XPath("//*[@id='AgregarCliente']")).Click();
+            Assert.IsTrue(driver.Url.Equals(UrlListado));
+            driver.Url = UrlAddEdit;
             try
             {
                 addEdit = new AddEditClientePage(driver);
@@ -66,11 +66,13 @@ namespace MantenimientoClientesTest.Selenium.TestCases
             }
             catch (Exception e)
             {
+                TearDown();
                 throw e;
             }
             finally
             {
                 len++;
+                driver.Url = UrlListado;
                 if (len == temp.Count)
                     TearDown();
             }
@@ -99,6 +101,6 @@ namespace MantenimientoClientesTest.Selenium.TestCases
             }
         }
 
-    */
+    
     }
 }

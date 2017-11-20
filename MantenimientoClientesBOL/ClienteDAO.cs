@@ -22,7 +22,6 @@ namespace MantenimientoClientesBOL
             {
                 connectionString = ConfigurationManager.ConnectionStrings["DataModel"].ConnectionString;
                 connection = new MySqlConnection(connectionString);
-                this.ctx = new DataModel(connection, false);
             }
             catch(Exception e )
             {
@@ -36,17 +35,25 @@ namespace MantenimientoClientesBOL
             Cliente cliente = null;
             try
             {
+                
                 cliente = new Cliente();
                 cliente.idcliente = id;
-                ctx.cliente.Attach(cliente);
-                ctx.cliente.Remove(cliente);
-                ctx.SaveChanges();
-                
+                OpenConnection();
+                using (ctx = new DataModel(connection, false))
+                {
+                    ctx.cliente.Attach(cliente);
+                    ctx.cliente.Remove(cliente);
+                    ctx.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
 
                 throw new ApplicationException(ex.Message);
+            }
+            finally
+            {
+                CloseConnection();
             }
         }
 
@@ -57,23 +64,26 @@ namespace MantenimientoClientesBOL
             try
             {
                 OpenConnection();
-                if (idcliente.HasValue)
-                    objCliente = ctx.cliente.FirstOrDefault(x => x.idcliente == idcliente);
-                else
+                using (ctx = new DataModel(connection, false))
                 {
-                    objCliente = new Cliente();
-                    ctx.cliente.Add(objCliente);
+                    if (idcliente.HasValue)
+                        objCliente = ctx.cliente.FirstOrDefault(x => x.idcliente == idcliente);
+                    else
+                    {
+                        objCliente = new Cliente();
+                        ctx.cliente.Add(objCliente);
+                    }
+
+                    objCliente.Apellido = Apellido;
+                    objCliente.Nombre = Nombre;
+                    objCliente.Dni = Dni;
+                    objCliente.Sexo = Sexo;
+                    objCliente.Edad = Edad;
+                    objCliente.Nivelestudios = Nivelestudios;
+                    objCliente.Telefono = Telefono;
+
+                    ctx.SaveChanges();
                 }
-
-                objCliente.Apellido = Apellido;
-                objCliente.Nombre = Nombre;
-                objCliente.Dni = Dni;
-                objCliente.Sexo = Sexo;
-                objCliente.Edad = Edad;
-                objCliente.Nivelestudios = Nivelestudios;
-                objCliente.Telefono = Telefono;
-
-                ctx.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -94,12 +104,16 @@ namespace MantenimientoClientesBOL
             {
                 List<Cliente> lstClientes = new List<Cliente>();
                 OpenConnection();
-                var query = ctx.cliente.AsQueryable();
-                if(!String.IsNullOrEmpty(filtro))
+                using (ctx = new DataModel(connection, false))
                 {
-                    query = query.Where(x => x.Apellido.Contains(filtro));
+                    var query = ctx.cliente.AsQueryable();
+                    if (!String.IsNullOrEmpty(filtro))
+                    {
+                        query = query.Where(x => x.Apellido.Contains(filtro));
+                    }
+
+                    return query.ToList();
                 }
-                return query.ToList();
             }
             catch (Exception ex)
             {
@@ -117,7 +131,10 @@ namespace MantenimientoClientesBOL
             {
                 OpenConnection();
                 Cliente c = null;
-                c = ctx.cliente.FirstOrDefault(x => x.idcliente == id);
+                using (ctx = new DataModel(connection, false))
+                {
+                    c = ctx.cliente.FirstOrDefault(x => x.idcliente == id);
+                }
                 return c;
             }
             catch (Exception ex)
@@ -142,11 +159,13 @@ namespace MantenimientoClientesBOL
             connection.Close();
         }
 
-
         public void Truncate()
         {
             OpenConnection();
-            ctx.Database.ExecuteSqlCommand("Truncate Table cliente");
+            using (ctx = new DataModel(connection, false))
+            {
+                ctx.Database.ExecuteSqlCommand("Truncate Table cliente");
+            }
             CloseConnection();
         }
     }

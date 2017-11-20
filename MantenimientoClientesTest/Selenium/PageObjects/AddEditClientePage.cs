@@ -1,11 +1,11 @@
-﻿using MantenimientoClientesTest.Selenium.Driver;
-using MantenimientoClientesTest.Selenium.TestDataAccess;
+﻿using MantenimientoClientesSeleniumTests.Selenium.Driver;
+using MantenimientoClientesSeleniumTests.Selenium.TestDataAccess;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
 using System;
 
-namespace MantenimientoClientesTest.Selenium.PageObjects
+namespace MantenimientoClientesSeleniumTests.Selenium.PageObjects
 {
     class AddEditClientePage
     {

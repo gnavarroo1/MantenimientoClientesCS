@@ -5,7 +5,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using System;
 
-namespace MantenimientoClientesTest.Selenium.Driver
+namespace MantenimientoClientesSeleniumTests.Selenium.Driver
 {
 
     public class WebDriver

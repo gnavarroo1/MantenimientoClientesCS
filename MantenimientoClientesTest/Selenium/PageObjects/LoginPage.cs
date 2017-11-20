@@ -1,11 +1,11 @@
-﻿using MantenimientoClientesTest.Selenium.Driver;
+﻿using MantenimientoClientesSeleniumTests.Selenium.Driver;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Configuration;
 using System.Threading;
 
-namespace MantenimientoClientesTest.Selenium.PageObjects
+namespace MantenimientoClientesSeleniumTests.Selenium.PageObjects
 {
     class LoginPage
     {
