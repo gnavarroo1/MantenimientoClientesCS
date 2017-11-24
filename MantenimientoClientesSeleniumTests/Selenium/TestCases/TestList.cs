@@ -10,6 +10,7 @@ using MantenimientoClientesSeleniumTests.Selenium.TestDataAccess;
 using System.ComponentModel;
 using OpenQA.Selenium;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace MantenimientoClientesSeleniumTests.Selenium.TestCases
 {
@@ -38,6 +39,7 @@ namespace MantenimientoClientesSeleniumTests.Selenium.TestCases
             {
                 driver = loginPage.GetWebDriver();
                 Assert.IsTrue(loginPage.IniciarSesion("admin", "clave"));
+                Thread.Sleep(250);
             }
             catch (Exception e)
             {
@@ -63,6 +65,7 @@ namespace MantenimientoClientesSeleniumTests.Selenium.TestCases
                 string esp = Regex.Replace(c.Resultado, @"\u00A0", " ");
                 bool b = msg.Equals(esp);
                 Assert.IsTrue(msg.Equals(esp));
+                Thread.Sleep(250);
             }
             catch (Exception e)
             {
